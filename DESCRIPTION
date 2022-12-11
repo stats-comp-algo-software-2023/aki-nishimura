@@ -1,5 +1,5 @@
-Package: hiperLogit
-Title: High-performance logistic regression for large data sets
+Package: hiperglm
+Title: High-performance generalized linear model for large data sets
 Version: 0.0.0.9000
 Authors@R: 
     person("Akihiko (Aki)", "Nishimura", , "aki.nishimura@jh.edu", role = c("aut", "cre"))
