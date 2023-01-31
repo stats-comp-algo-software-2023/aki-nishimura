@@ -1,8 +1,8 @@
 #' @export
-hiper_glm <- function(outcome, design, family = "linear") {
-  supported_family <- c("linear", "logit")
-  if (!(family %in% supported_family)) {
-    stop(sprintf("The family %s is not supported.", family))
+hiper_glm <- function(outcome, design, model = "linear") {
+  supported_model <- c("linear", "logit")
+  if (!(model %in% supported_model)) {
+    stop(sprintf("The model %s is not supported.", model))
   }
   warning("`hiper_glm` is yet to be implemented.")
   # TODO: maximize likelihood
