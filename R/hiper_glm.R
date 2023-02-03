@@ -25,9 +25,11 @@ find_mle <- function(design, outcome, model, option) {
   return(result)
 }
 
+
 solve_via_least_sq <- function(design, outcome) {
-  # TODO: implement
-  return(list())
+  mle_coef <- solve(t(design) %*% design, t(design) %*% outcome)
+  mle_coef <- as.vector(mle_coef)
+  return(list(coef = mle_coef))
 }
 
 solve_via_optim <- function(design, outcome, method) {
