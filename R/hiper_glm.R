@@ -5,8 +5,32 @@ hiper_glm <- function(design, outcome, model = "linear", option = list()) {
     stop(sprintf("The model %s is not supported.", model))
   }
   warning("`hiper_glm` is yet to be implemented.")
-  # TODO: maximize likelihood
-  hglm_out <- list()
+  mle <- find_mle(design, outcome, model, option)
+  hglm_out <- list(coef = mle$coef)
   class(hglm_out) <- "hglm"
   return(hglm_out)
+}
+
+find_mle <- function(design, outcome, model, option) {
+  if (model == 'linear') {
+    if (is.null(option$mle_solver)) {
+      result <- solve_via_least_sq(design, outcome)
+    } else {
+      result <- solve_via_optim(design, outcome, option$mle_solver)
+    }
+  } else {
+    # TODO: implement iteratively reweighted least-sq
+    stop("Not yet implemented.")
+  }
+  return(result)
+}
+
+solve_via_least_sq <- function(design, outcome) {
+  # TODO: implement
+  return(list())
+}
+
+solve_via_optim <- function(design, outcome, method) {
+  # TODO: implement
+  return(list())
 }
