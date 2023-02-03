@@ -25,7 +25,6 @@ find_mle <- function(design, outcome, model, option) {
   return(result)
 }
 
-
 solve_via_least_sq <- function(design, outcome) {
   mle_coef <- solve(t(design) %*% design, t(design) %*% outcome)
   mle_coef <- as.vector(mle_coef)
@@ -33,6 +32,20 @@ solve_via_least_sq <- function(design, outcome) {
 }
 
 solve_via_optim <- function(design, outcome, method) {
-  # TODO: implement
-  return(list())
+  init_coef <- rep(0, ncol(design))
+  obj_fn <- function (coef) {
+    calc_linear_loglik(coef, design, outcome) 
+  }
+  obj_grad <- function (coef) {
+    calc_linear_grad(coef, design, outcome)
+  }
+  optim_result <- stats::optim(
+    init_coef, obj_fn, obj_grad, method = method,
+    control = list(fnscale = -1) # Maximize the function
+  )
+  optim_converged <- (optim_result$convergence == 0L)
+  if (!optim_converged) {
+    warning("Optimization did not converge. The estimates may be meaningless.")
+  }
+  return(list(coef = optim_result$par))
 }
